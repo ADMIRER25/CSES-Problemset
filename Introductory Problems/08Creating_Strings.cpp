@@ -60,9 +60,47 @@ ll binaryExponentiation(ll x, ll b)
     return ans;
 }
 
+int n;
+string s;
+vector<string> ans;
+void solve(int ind, string t, vector<int> f)
+{
+
+    if (ind >= n)
+    {
+        ans.pb(t);
+        return;
+    }
+
+    for (int i = 0; i < 26; i++)
+    {
+        if (f[i] > 0)
+        {
+            f[i]--;
+            t += (char)('a' + i);
+            solve(ind + 1, t, f);
+
+            f[i]++;
+            t.pop_back();
+        }
+    }
+}
 void Solution()
 {
-   
+    cin >> s;
+    n = s.length();
+    // cout << n << endl;
+    string t = "";
+    vector<int> f(26, 0);
+    for (char ch : s)
+        f[int(ch - 'a')]++;
+    // for (auto ch : f)
+    //     cout << ch << " ";
+    solve(0, t, f);
+    sort(begin(ans), end(ans));
+    cout << ans.size() << endl;
+    for (auto str : ans)
+        cout << str << endl;
 }
 
 int main()

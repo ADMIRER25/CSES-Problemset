@@ -59,10 +59,46 @@ ll binaryExponentiation(ll x, ll b)
     }
     return ans;
 }
+ll n;
+vector<ll> w;
+ll t = 0;
+ll mini = INT_MAX;
+void solve(ll ind, ll sum)
+{
+    if (ind >= w.size())
+        return;
 
+    ll rest = t - (sum + w[ind]);
+    ll diff = abs((sum + w[ind]) - rest);
+    mini = min(mini, diff);
+    solve(ind + 1, sum + w[ind]);
+
+    rest = t - sum;
+    diff = abs(sum - rest);
+    mini = min(mini, diff);
+    solve(ind + 1, sum);
+}
 void Solution()
 {
-   
+    cin >> n;
+    if (n == 1)
+    {
+        int val;
+        cin >> val;
+        cout << val << endl;
+        return;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        int val;
+        cin >> val;
+        w.pb(val);
+        t += val;
+    }
+    int sum = 0;
+    solve(0, sum);
+    cout << mini << endl;
 }
 
 int main()
